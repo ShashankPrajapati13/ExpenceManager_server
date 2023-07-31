@@ -4,14 +4,16 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var cors = require("cors");
+
 
 var indexRouter = require("./routes/index");
 
 var app = express();
+const cors = require('cors');
 app.use(cors({
-  origin:'https://extraordinary-ganache-08360b.netlify.app/',
-  credentials:true
+  origin:'http://localhost:5000', 
+  credentials:true,           
+  optionSuccessStatus:200
 }))
 
 app.use(logger("dev"));

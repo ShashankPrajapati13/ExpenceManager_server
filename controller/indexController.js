@@ -7,28 +7,40 @@ exports.Slashpage = function(req, res, next) {
   }
 
 exports.CreateUser = async function(req,res,next){
-    const {username,password,email}= req.body;
+    try{
+      const {username,password,email}= req.body;
     const user = await userSchema.create({
         email,
         username,
         password
     })
     sendToken(user,201,res)
+    }
+    catch (error) {
+      res.status(500).json(error)
+      }
 }
 
 exports.LoginUser = async function(req,res,next){
-    const {email,password}= req.body;
-
+  try{
+    const {email,password} = req.body
     const user = await userSchema.findOne({email}).select("+password")
-    if(!user){
-        res.json({message:"user not found !"})
-    }
-     
-    const matchPassword = user.comparePassword(password);
 
-    if(!matchPassword) res.json({message:"Invalid Credentials !"})
+    if(!user) {
+      return res.status(401).json("user not registered")
+    }
+    
+    const matchedPassword =await user.comparePassword(password)
+
+    if(!matchedPassword){
+       return res.status(401).json("Invalid Credentials")
+    }
 
     sendToken(user,201,res)
+   }
+   catch(err){
+    res.status(500).json(err)
+   }
 
 
 }

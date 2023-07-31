@@ -5,7 +5,7 @@ exports.isAuthenticate = async (req, res, next) => {
   try {
     const { token } = req.cookies;
 
-    if (!token) return res.json({ message: "please login to continue" });
+    if (!token) return res.json({ message: "please login to continue", value:false });
 
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
 

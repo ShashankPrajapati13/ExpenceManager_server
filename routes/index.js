@@ -29,10 +29,16 @@ router.post('/editExpense/:plc', isAuthenticate ,editExpense)
 router.get('/home', isAuthenticate , homePage);
 
 router.get('/getuser',isAuthenticate, function(req,res,next){
-    res.status(201).json({
-        message:"user Found!",
-        user:req.user,
-})
+    try {
+        res.status(201).json({
+            message:"user Found!",
+            user:req.user,
+            value:true
+        })
+
+    } catch (error) {
+        res.send(error)
+    }
 })
 
 module.exports = router;
