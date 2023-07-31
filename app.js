@@ -10,7 +10,7 @@ var indexRouter = require("./routes/index");
 
 var app = express();
 app.use(cors({
-  origin:'http://localhost:5173',
+  origin:'https://extraordinary-ganache-08360b.netlify.app/',
   credentials:true
 }))
 
